@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> AWS IAM at ZipRecruiter </title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+<img src="./img/iam.jpg" style="float:right" />
+
+## AWS IAM at ZipRecruiter
+
+---
+
+<img src="./img/nouns.png" style="float:right" />
+
+## IAM Nouns
+
+* Policy
+* Role
+* User
+* Group
+
+---
+
+<img src="./img/policy.jpg" style="float:right" />
+
+## IAM Policy
+
+```
+{ "Version": "2012-10-17",
+"Statement": [{
+  "Sid": "S3FooBucketOperations",
+  "Effect": "Allow",
+  "Action": [
+      "s3:Get*", "s3:ListBucket"
+  ],
+  "Resource": [
+    "arn:aws:s3:::foo.*.bar.com"
+  ]
+}, {
+  "Sid": "S3FooObjectOperations",
+  "Effect": "Allow",
+  "Action": [
+      "s3:DeleteObject",
+      "s3:GetObject"
+  ],
+  "Resource": [
+    "arn:aws:s3:::foo.bar.com/*"
+  ] }]}
+```
+
+ * Conditions
+
+---
+
+<img src="./img/xen.jpg" style="float:right" />
+
+## IAM Roles
+
+ * In HyperVisor
+ * How the code should run
+
+```
+$ curl 169.254.169.254/latest/meta-data\
+       /iam/security-credentials/zr-foo
+{
+  "Code" : "Success",
+  "LastUpdated" : "2017-04-27T21:42:27Z",
+  "Type" : "AWS-HMAC",
+  "AccessKeyId" : "ASIAJP2V5J4IOG4ECNEA",
+  "SecretAccessKey" : "QSCv8CFpTLQz95AAdpBOlGA2gC7fGiuuSElFlwYo",
+  "Token" : "FQoD...JyAU=",
+  "Expiration" : "2017-04-28T03:46:48Z"
+}
+```
+
+---
+
+<img src="./img/zip.jpg" style="float:right" />
+
+# At Zip
+
+---
+
+<img src="./img/lib1.png" style="float:right" />
+
+## Library Work
+
+ * Easy
+ * Medium
+ * Hard
+
+---
+
+## Library Work Code
+
+[won't fit on a
+slide](https://gist.github.com/frioux/ef8c2051263c70e31ab4b7ba39153aff#file-v4-pl)
+
+<img src="./img/lib2.jpg" />
+
+---
+
+<img src="./img/lib3.jpg" style="float:right" />
+
+## Library Work ++
+
+ * We made Paws and Net::Amazon::Signature::V4 faster, woo
+---
+
+<img src="./img/misc.jpg" style="float:right" />
+
+## Policies and how they are wrote
+
+ * Creds
+ * SkeletonKey
+ * Tier
+ * ServerClass
+ * Iterate ❌ 1 billion, break everything
+ * Remove SkeletonKey
+ * Reduce Creds
+ * Remove Creds
+
+---
+
+<img src="./img/threat1.jpg" style="float:right" />
+
+# Threat Modelling
+
+---
+
+<img src="./img/threat2.jpg" style="float:right" />
+
+## Risk
+
+ * Who? (Engineers, Hackers, The Government)
+ * What? (Data Exfiltration, Deletion, outages)
+ * Cost? ($10,000; $100,000; $1,000,000?)
+
+
+---
+
+<img src="./img/threat3.jpg" style="float:right" />
+
+## Risk Avoidance
+
+ * Engineering time to build
+ * Cost to support
+ * Engineer time wasted
+ * All add up to $$$ and it should be less than Risk
+
+---
+
+<img src="./img/threat4.jpg" style="float:right" />
+
+## Recovery
+
+ * Backups
+ * Automation
+ * You need these anyway
+ * Hone and exercise them to make Risk Avoidance pointless
+
+---
+
+<img src="./img/end.jpg" style="float:right" />
+
+## The End
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
+
+
